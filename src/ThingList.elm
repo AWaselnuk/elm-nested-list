@@ -1,4 +1,4 @@
-module ListofThing exposing (Model, update, view, init, Msg)
+module ThingList exposing (Model, update, view, init, Msg)
 
 import Thing
 import Html exposing (..)

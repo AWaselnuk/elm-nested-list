@@ -1,1 +1,8 @@
-body {background: pink;}
+body {
+  background: pink;
+  font-size: 1.1rem;
+}
+
+label {
+  display: block;
+}

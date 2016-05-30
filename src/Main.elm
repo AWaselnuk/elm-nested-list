@@ -1,10 +1,10 @@
-import ListofThing
+import ThingList
 import Html.App as Html
 
 main =
   Html.program
-    { view = ListofThing.view
-    , update = ListofThing.update
-    , init = ListofThing.init
+    { view = ThingList.view
+    , update = ThingList.update
+    , init = ThingList.init
     , subscriptions = \_ -> Sub.none
     }

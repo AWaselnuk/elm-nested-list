@@ -7285,7 +7285,7 @@ var _user$elm_encounters$Thing$view = function (model) {
 			]));
 };
 
-var _user$elm_encounters$ListofThing$update = F2(
+var _user$elm_encounters$ThingList$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
 		switch (_p0.ctor) {
@@ -7340,7 +7340,7 @@ var _user$elm_encounters$ListofThing$update = F2(
 				};
 		}
 	});
-var _user$elm_encounters$ListofThing$init = {
+var _user$elm_encounters$ThingList$init = {
 	ctor: '_Tuple2',
 	_0: {
 		uid: 1,
@@ -7349,28 +7349,28 @@ var _user$elm_encounters$ListofThing$init = {
 	},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
-var _user$elm_encounters$ListofThing$Model = F2(
+var _user$elm_encounters$ThingList$Model = F2(
 	function (a, b) {
 		return {uid: a, thingList: b};
 	});
-var _user$elm_encounters$ListofThing$ModifyThing = F2(
+var _user$elm_encounters$ThingList$ModifyThing = F2(
 	function (a, b) {
 		return {ctor: 'ModifyThing', _0: a, _1: b};
 	});
-var _user$elm_encounters$ListofThing$indexedThingView = function (_p7) {
+var _user$elm_encounters$ThingList$indexedThingView = function (_p7) {
 	var _p8 = _p7;
 	return A2(
 		_elm_lang$html$Html_App$map,
-		_user$elm_encounters$ListofThing$ModifyThing(_p8._0),
+		_user$elm_encounters$ThingList$ModifyThing(_p8._0),
 		_user$elm_encounters$Thing$view(_p8._1));
 };
-var _user$elm_encounters$ListofThing$RemoveThing = function (a) {
+var _user$elm_encounters$ThingList$RemoveThing = function (a) {
 	return {ctor: 'RemoveThing', _0: a};
 };
-var _user$elm_encounters$ListofThing$AddThing = function (a) {
+var _user$elm_encounters$ThingList$AddThing = function (a) {
 	return {ctor: 'AddThing', _0: a};
 };
-var _user$elm_encounters$ListofThing$addThingView = function (model) {
+var _user$elm_encounters$ThingList$addThingView = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -7382,7 +7382,7 @@ var _user$elm_encounters$ListofThing$addThingView = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html_Events$onClick(
-						_user$elm_encounters$ListofThing$AddThing(
+						_user$elm_encounters$ThingList$AddThing(
 							_user$elm_encounters$Thing$Model('new thing')))
 					]),
 				_elm_lang$core$Native_List.fromArray(
@@ -7391,31 +7391,31 @@ var _user$elm_encounters$ListofThing$addThingView = function (model) {
 					]))
 			]));
 };
-var _user$elm_encounters$ListofThing$view = function (model) {
+var _user$elm_encounters$ThingList$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_user$elm_encounters$ListofThing$addThingView(model),
+				_user$elm_encounters$ThingList$addThingView(model),
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html_Attributes$class('characters')
 					]),
-				A2(_elm_lang$core$List$map, _user$elm_encounters$ListofThing$indexedThingView, model.thingList))
+				A2(_elm_lang$core$List$map, _user$elm_encounters$ThingList$indexedThingView, model.thingList))
 			]));
 };
-var _user$elm_encounters$ListofThing$NoOp = {ctor: 'NoOp'};
+var _user$elm_encounters$ThingList$NoOp = {ctor: 'NoOp'};
 
 var _user$elm_encounters$Main$main = {
 	main: _elm_lang$html$Html_App$program(
 		{
-			view: _user$elm_encounters$ListofThing$view,
-			update: _user$elm_encounters$ListofThing$update,
-			init: _user$elm_encounters$ListofThing$init,
+			view: _user$elm_encounters$ThingList$view,
+			update: _user$elm_encounters$ThingList$update,
+			init: _user$elm_encounters$ThingList$init,
 			subscriptions: function (_p0) {
 				return _elm_lang$core$Platform_Sub$none;
 			}
