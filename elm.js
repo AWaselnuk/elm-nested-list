@@ -7220,25 +7220,10 @@ var _elm_lang$html$Html_Events$Options = F2(
 	});
 
 var _user$elm_encounters$Thing$init = {name: 'A name'};
-var _user$elm_encounters$Thing$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		if (_p0.ctor === 'ModifyName') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{name: _p0._0}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-		}
-	});
 var _user$elm_encounters$Thing$Model = function (a) {
 	return {name: a};
 };
-var _user$elm_encounters$Thing$Remove = {ctor: 'Remove'};
+var _user$elm_encounters$Thing$RemoveSelf = {ctor: 'RemoveSelf'};
 var _user$elm_encounters$Thing$ModifyName = function (a) {
 	return {ctor: 'ModifyName', _0: a};
 };
@@ -7276,7 +7261,7 @@ var _user$elm_encounters$Thing$view = function (model) {
 				_elm_lang$html$Html$button,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Events$onClick(_user$elm_encounters$Thing$Remove)
+						_elm_lang$html$Html_Events$onClick(_user$elm_encounters$Thing$RemoveSelf)
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -7284,6 +7269,28 @@ var _user$elm_encounters$Thing$view = function (model) {
 					]))
 			]));
 };
+var _user$elm_encounters$Thing$Remove = {ctor: 'Remove'};
+var _user$elm_encounters$Thing$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'ModifyName') {
+			return {
+				ctor: '_Tuple3',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{name: _p0._0}),
+				_1: _elm_lang$core$Platform_Cmd$none,
+				_2: _elm_lang$core$Maybe$Nothing
+			};
+		} else {
+			return {
+				ctor: '_Tuple3',
+				_0: model,
+				_1: _elm_lang$core$Platform_Cmd$none,
+				_2: _elm_lang$core$Maybe$Just(_user$elm_encounters$Thing$Remove)
+			};
+		}
+	});
 
 var _user$elm_encounters$ThingList$update = F2(
 	function (msg, model) {
@@ -7303,39 +7310,35 @@ var _user$elm_encounters$ThingList$update = F2(
 						{thingList: newThingList, uid: model.uid + 1}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'RemoveThing':
-				var newThingList = A2(
-					_elm_lang$core$List$filter,
-					function (_p1) {
-						var _p2 = _p1;
-						return !_elm_lang$core$Native_Utils.eq(_p2._0, _p0._0);
-					},
-					model.thingList);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{thingList: newThingList}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 			default:
-				var updateThing = function (_p3) {
-					var _p4 = _p3;
-					var _p6 = _p4._1;
-					var _p5 = _p4._0;
-					return _elm_lang$core$Native_Utils.eq(_p0._0, _p5) ? {
+				var updateThing = function (_p1) {
+					var _p2 = _p1;
+					var _p5 = _p2._1;
+					var _p4 = _p2._0;
+					var _p3 = {
 						ctor: '_Tuple2',
-						_0: _p5,
-						_1: _elm_lang$core$Basics$fst(
-							A2(_user$elm_encounters$Thing$update, _p0._1, _p6))
-					} : {ctor: '_Tuple2', _0: _p5, _1: _p6};
+						_0: _elm_lang$core$Native_Utils.eq(_p4, _p0._0),
+						_1: A2(_user$elm_encounters$Thing$update, _p0._1, _p5)
+					};
+					if (_p3._0 === false) {
+						return _elm_lang$core$Maybe$Just(
+							{ctor: '_Tuple2', _0: _p4, _1: _p5});
+					} else {
+						if (_p3._1._2.ctor === 'Just') {
+							return _elm_lang$core$Maybe$Nothing;
+						} else {
+							return _elm_lang$core$Maybe$Just(
+								{ctor: '_Tuple2', _0: _p4, _1: _p3._1._0});
+						}
+					}
 				};
-				var newThingList = A2(_elm_lang$core$List$map, updateThing, model.thingList);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{thingList: newThingList}),
+						{
+							thingList: A2(_elm_lang$core$List$filterMap, updateThing, model.thingList)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
@@ -7357,15 +7360,12 @@ var _user$elm_encounters$ThingList$ModifyThing = F2(
 	function (a, b) {
 		return {ctor: 'ModifyThing', _0: a, _1: b};
 	});
-var _user$elm_encounters$ThingList$indexedThingView = function (_p7) {
-	var _p8 = _p7;
+var _user$elm_encounters$ThingList$indexedThingView = function (_p6) {
+	var _p7 = _p6;
 	return A2(
 		_elm_lang$html$Html_App$map,
-		_user$elm_encounters$ThingList$ModifyThing(_p8._0),
-		_user$elm_encounters$Thing$view(_p8._1));
-};
-var _user$elm_encounters$ThingList$RemoveThing = function (a) {
-	return {ctor: 'RemoveThing', _0: a};
+		_user$elm_encounters$ThingList$ModifyThing(_p7._0),
+		_user$elm_encounters$Thing$view(_p7._1));
 };
 var _user$elm_encounters$ThingList$AddThing = function (a) {
 	return {ctor: 'AddThing', _0: a};

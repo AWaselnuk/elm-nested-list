@@ -1,4 +1,4 @@
-module Thing exposing (Model, update, view, init, Msg)
+module Thing exposing (Model, ParentMsg(Remove), update, view, init, Msg)
 
 import Html exposing (..)
 import Html.App as App
@@ -15,7 +15,9 @@ type alias Model =
 
 type Msg
   = ModifyName String
-  | Remove
+  | RemoveSelf
+
+type ParentMsg = Remove
 
 -- HINT FROM SPORTO
 -- you can return a tuple with three values from the child
@@ -24,13 +26,13 @@ type Msg
 -- so the child would return something like (Model, Cmd, RootCmd)
 -- ^^ Use that pattern instead of passing in context
 
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Msg -> Model -> (Model, Cmd Msg, Maybe ParentMsg)
 update msg model =
   case msg of
     ModifyName name ->
-      ({ model | name = name }, Cmd.none)
-    Remove ->
-      (model, Cmd.none)
+      ({ model | name = name }, Cmd.none, Nothing)
+    RemoveSelf ->
+      (model, Cmd.none, Just Remove)
 
 -- VIEW
 
@@ -49,7 +51,7 @@ view model =
         , onInput ModifyName
         ] []
     , button
-        [ onClick Remove ]
+        [ onClick RemoveSelf ]
         [ text "Remove" ]
     ]
 

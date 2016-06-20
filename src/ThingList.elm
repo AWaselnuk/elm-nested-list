@@ -28,7 +28,6 @@ init =
 type Msg
   = NoOp
   | AddThing Thing.Model
-  | RemoveThing ID
   | ModifyThing ID Thing.Msg
 
 update: Msg -> Model -> (Model, Cmd Msg)
@@ -44,22 +43,18 @@ update msg model =
              thingList = newThingList,
              uid = model.uid + 1 }
         , Cmd.none)
-    RemoveThing id ->
-      let
-        newThingList = List.filter (\(thingID, _) -> thingID /= id) model.thingList
-      in
-        ({ model | thingList = newThingList }
-        , Cmd.none)
     ModifyThing id thingMsg ->
       let
         updateThing (thingID, thingModel) =
-          if id == thingID then
-            (thingID, fst <| Thing.update thingMsg thingModel)
-          else
-            (thingID, thingModel)
-        newThingList = List.map updateThing model.thingList
+          case (thingID == id, Thing.update thingMsg thingModel) of
+            (False, _) ->
+              Just (thingID, thingModel)
+            (True, (newThingModel, _, Just Thing.Remove)) ->
+              Nothing
+            (True, (newThingModel, _, _)) ->
+              Just (thingID, newThingModel)
       in
-        ({ model | thingList = newThingList }
+        ({ model | thingList = List.filterMap updateThing model.thingList }
         , Cmd.none)
 
 -- VIEW
